@@ -42,7 +42,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "click student " + note.getId(), Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(context, "click student " + note.getId(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context,Detaile_Note.class);
                 intent.putExtra("pos",note.getId());
                 context.startActivity(intent);

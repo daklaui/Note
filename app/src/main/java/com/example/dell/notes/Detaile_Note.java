@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,37 +40,27 @@ FloatingActionButton floatingActionButtonupdate;
         floatingActionButtonupdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean vc=(boolean) actionsNote.updateNote(note.getId(),String.valueOf(Titre.getText()),String.valueOf(Det.getText()));
-                if(vc!=false)
-                {
+                if (Titre.getText().length() != 0 || Det.getText().length() != 0) {
+                    boolean vc = (boolean) actionsNote.updateNote(note.getId(), String.valueOf(Titre.getText()), String.valueOf(Det.getText()));
+                    if (vc != false) {
 
-                    Toast.makeText(Detaile_Note.this, "enregistrer id = " +vc, Toast.LENGTH_SHORT).show();
-                    actionsNote.close();
-                    Intent in = new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(in);
+                       // Toast.makeText(Detaile_Note.this, "enregistrer id = " + vc, Toast.LENGTH_SHORT).show();
+                        actionsNote.close();
+                        Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(in);
+                    }
+
+                    else{
+                        Toast.makeText(Detaile_Note.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else
-                    Toast.makeText(Detaile_Note.this, "Something wrong", Toast.LENGTH_SHORT).show();
 
             }
 
         });
-        dialog = new AlertDialog.Builder(Detaile_Note.this);
-        dialog.setCancelable(false);
-        dialog.setTitle("Dialog on Android");
-        dialog.setMessage("Are you sure you want to delete this entry?" );
-        dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                //Action for "Delete".
-            }
-        })
-                .setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Action for "Cancel".
-                    }
-                });
+
+        Titre.addTextChangedListener(new EditTextListener());
+        Det.addTextChangedListener(new EditTextListener2());
     }
 
     public void onBackPressed() {
@@ -78,7 +70,7 @@ FloatingActionButton floatingActionButtonupdate;
                 .setPositiveButton("Enregistrer", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //finish();
-                        if (Titre.getText().length() == 0 && Det.getText().length() == 0) {
+                        if (Titre.getText().length() != 0 || Det.getText().length() != 0) {
                             boolean vc = (boolean) actionsNote.updateNote(note.getId(), String.valueOf(Titre.getText()), String.valueOf(Det.getText()));
                             if (vc != false) {
                                 Toast.makeText(Detaile_Note.this, "enregistrer ", Toast.LENGTH_SHORT).show();
@@ -123,4 +115,61 @@ FloatingActionButton floatingActionButtonupdate;
             actionsNote.close();
         }
     }*/
+
+    private class EditTextListener implements TextWatcher {
+
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // Toast.makeText(AjouterNote.this,Titre.getText().toString(),Toast.LENGTH_LONG).show();
+            if(Titre.getText().length()>0)
+            {
+                floatingActionButtonupdate.setVisibility(View.VISIBLE);
+
+            }
+            else
+            {
+                floatingActionButtonupdate.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    }
+
+    private class EditTextListener2 implements TextWatcher {
+
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // Toast.makeText(AjouterNote.this,Titre.getText().toString(),Toast.LENGTH_LONG).show();
+            if(Det.getText().length()>0)
+            {
+                floatingActionButtonupdate.setVisibility(View.VISIBLE);
+
+            }
+            else
+            {
+                floatingActionButtonupdate.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    }
+
 }

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
+android:visibility="invisible"
         android:layout_alignParentEnd="true"
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="26dp"
